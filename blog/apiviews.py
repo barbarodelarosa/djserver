@@ -112,17 +112,21 @@ class PostLikeAPIToggle(views.APIView):
         user = self.request.user
         updated = False
         liked   = False
+        count   = 0
         if user.is_authenticated:
             if user in obj.likes.all():
                 liked = False
                 obj.likes.remove(user)
+                count = obj.likes.count()
             else:
                 liked = True
                 obj.likes.add(user)
+                count = obj.likes.count()
             updated = True
         data = {
             "updated" : updated,
-            "liked"   : liked
+            "liked"   : liked,
+            "count"   : count
         }
 
         return Response(data)
