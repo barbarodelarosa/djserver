@@ -52,7 +52,10 @@ class Post(OwnerModel, ResizeImageMixin):
     aprobado = models.BooleanField(default=False, blank=True, null=True)
     vistas = models.IntegerField(default=0)
     likes = models.ManyToManyField(User, blank=True, related_name='likes')
+    alcance = models.ManyToManyField(User, blank=True, related_name='alcance')
 
+    def alcance_total(self):
+        return self.alcance.count()
 
     def total_likes(self):
         return self.likes.count()

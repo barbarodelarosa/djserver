@@ -147,3 +147,26 @@ class VistoPostAPIView(views.APIView):
         }
 
         return Response(data)
+
+
+
+class AlcancePostAPIView(views.APIView):
+    authentication_classes = [JWTAuthentication]
+    permission_classes = [permissions.IsAuthenticated]
+
+    def get(self, request, *args, **kwargs):
+        id = self.kwargs.get("id")
+        obj  = get_object_or_404(Post, id=id)
+        user = self.request.user
+        updated = False
+        alcance   = False
+        if user.is_authenticated:
+            if not user in obj.alcance.all():
+                alcance = True
+                obj.alcance.add(user)
+            updated = True
+        data = {
+            "updated" : updated,
+            "alcance" : alcance
+        }
+        return Response(data)
