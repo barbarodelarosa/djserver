@@ -174,3 +174,31 @@ class AlcancePostAPIView(views.APIView):
             "alcance" : alcance
         }
         return Response(data)
+
+
+
+class PostReportAPIToggle(views.APIView):
+    # authentication_classes = [JWTAuthentication]
+    # permission_classes = [permissions.IsAuthenticated]
+# FUNCTION FOR UPDATE POST (reports)
+    def get(self, request, *args, **kwargs):
+        id = self.kwargs.get("id")
+        obj  = get_object_or_404(Post, id=id)
+        # url_ = obj.get_absolute_url()
+        user = self.request.user
+        updated = False
+        reported   = False
+        count   = 0
+        if user.is_authenticated:
+            if not user in obj.reports.all():
+                reported = True
+                obj.reports.add(user)
+                count = obj.reports.count()
+                updated = True
+        data = {
+            "updated" : updated,
+            "reported"   : reported,
+            "count"   : count
+        }
+
+        return Response(data)

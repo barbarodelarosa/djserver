@@ -8,7 +8,7 @@ class MyPostAdmin(admin.ModelAdmin):
     list_display = ('aprobado', 'titulo', 'actualizado', 'votos', 'compartido')
     list_display_links = ('titulo',)
     search_fields = ['categoria', 'owner', 'titulo', 'mensaje']
-    filter_horizontal = ['categoria','likes','alcance']
+    filter_horizontal = ['categoria','likes','alcance','reports']
     list_filter = ['categoria', 'aprobado', 'creado', 'actualizado']
     ordering = ['aprobado','creado','actualizado','votos','compartido']
 

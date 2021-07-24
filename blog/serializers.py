@@ -7,8 +7,6 @@ from drf_writable_nested.serializers import WritableNestedModelSerializer
 from datetime import timezone
 
 from drf_extra_fields.fields import Base64ImageField
-
-
 class ComentarioSerializers(serializers.ModelSerializer):
     owner = serializers.HiddenField(
         default=serializers.CurrentUserDefault()
@@ -138,3 +136,8 @@ class LikePostSerializers(serializers.ModelSerializer):
         model=Post
         fields=['id','likes']
 
+class ReportPostSerializers(serializers.ModelSerializer):
+
+    class Meta:
+        model=Post
+        fields=['id','reports']

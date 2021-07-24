@@ -63,7 +63,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'rest_framework_simplejwt',
     'rest_framework.authtoken',
-    'drf_spectacular',
+    #'drf_spectacular',
     'django_filters',
     'dj_rest_auth',
     ###### Paquetes para auth #####
