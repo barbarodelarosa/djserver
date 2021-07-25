@@ -4,8 +4,9 @@ from usuario.models import User
 
 
 class UsuarioSerializers(serializers.ModelSerializer):
-    email = serializers.ReadOnlyField()
+    email    = serializers.ReadOnlyField()
     username = serializers.ReadOnlyField()
+    avatar   = serializers.ImageField(required = False)
     class Meta:
         model=User
         fields=[
