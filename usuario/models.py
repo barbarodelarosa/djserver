@@ -41,9 +41,12 @@ class User(AbstractUser, ResizeImageMixin):
     tipo_usuario = models.IntegerField(choices=USER_TYPE, default=1, blank=True, null=True)
     amigos = models.ManyToManyField("self", related_name='amigos', blank=True)
     avatar = models.ImageField(upload_to=path_to_avatar, null=True, blank=True)
-    edad = models.DateField(auto_now_add=True, null=True, blank=True)
+    birthday = models.DateField(auto_now_add=True, null=True, blank=True)
+    age = models.IntegerField(blank=True, null=True)
+    height = models.FloatField(blank=True, null=True)
+    weight = models.FloatField(blank=True, null=True)
     genero = models.CharField(max_length=10, choices=GENERO, default='')
-    seguidores=models.ManyToManyField("self", related_name='usuario_seguidores', blank=True)
+    seguidores=models.ManyToManyField("self", related_name='usuario_seguidores', blank=True, symmetrical=False)
     compartido = models.IntegerField(default=0)
     creado = models.DateTimeField(default=timezone.now)
     actualizado = models.DateTimeField(blank=True, null=True, auto_now=True)
@@ -61,6 +64,7 @@ class User(AbstractUser, ResizeImageMixin):
     localidad = models.CharField(blank=True, null=True, max_length=25)
     calle = models.CharField(blank=True, null=True, max_length=25)
     coordenadas = models.CharField(max_length=60, blank=True, null=True)
+    presentation = models.TextField(max_length=300, blank=True, null=True)
 
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = ['username', 'password']

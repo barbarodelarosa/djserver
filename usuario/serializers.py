@@ -20,6 +20,13 @@ class UsuarioSerializers(serializers.ModelSerializer):
             'amigos',
             'avatar',
             'movil',
+            'presentation',
+            'seguidores',
+            'usuario_seguidores',
+            'birthday',
+            'age',
+            'height',
+            'weight',
 
         ]
 
