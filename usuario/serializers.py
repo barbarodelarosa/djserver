@@ -27,6 +27,7 @@ class UsuarioSerializers(serializers.ModelSerializer):
             'age',
             'height',
             'weight',
+            'post_set',
 
         ]
 

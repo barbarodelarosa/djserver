@@ -1,5 +1,6 @@
 
 from usuario.apiviews import UsuarioViewSet
+from imc.views import IMCViewSet
 from blog.apiviews import CategoriaPostViewSet, PostViewSet, ComentarioPostViewSet, CategoriaPostReadOnlyModelViewSet, \
                           PostReadOnlyModelViewSet, ImagenPostViewSet
 
@@ -31,6 +32,7 @@ router.register('galeria', GaleriaViewSet, basename='read-producto')
 
 
 router.register('usuario', UsuarioViewSet, basename='usuario')
+router.register('imc', IMCViewSet, basename='imc')
 
 urlpatterns=[
 

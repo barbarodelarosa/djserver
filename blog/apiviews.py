@@ -47,12 +47,13 @@ class PostReadOnlyModelViewSet(viewsets.ReadOnlyModelViewSet):
 
     filter_backends = [DjangoFilterBackend, filters.SearchFilter, filters.OrderingFilter]
 
-    search_fields = ['titulo','mensaje','creado']
+    search_fields = ['titulo','mensaje','creado','owner']
     ordering_fields =['creado', 'titulo']
     filterset_fields = {
         'creado': ['lte', 'gte'],  # Año menor o igual, mayor o igual que
         'titulo': ['exact'],  # Género exacto
-        'categoria': ['exact']  # Género exacto
+        'categoria': ['exact'],  # Género exacto
+        'owner':['exact']
     }
     pagination_class = ExtendedPagination
     pagination_class.page_size = 10
@@ -142,6 +143,7 @@ class VistoPostAPIView(views.APIView):
         # url_ = obj.get_absolute_url()
         user = self.request.user
         visto = obj.vistas
+        suma = 0
         if user.is_authenticated:
             suma = visto + 1
             obj.vistas = suma
