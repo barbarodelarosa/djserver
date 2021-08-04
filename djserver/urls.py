@@ -30,10 +30,10 @@ from rest_framework_simplejwt.views import  TokenObtainPairView,  TokenRefreshVi
 
 
 from api.views import MyPasswordTokenCheckAPI, CustomResgisterView
-    # , MySetNewPasswordAPIView
+    # , MySetNewPasswordAPIViewfrom 
 
 from blog.apiviews import PostLikeAPIToggle, VistoPostAPIView, AlcancePostAPIView, PostReportAPIToggle
-
+from imc.views import PrivateTestAPIToggle
 
 
 
@@ -49,6 +49,7 @@ urlpatterns = [
     path('api/v1/post/<int:id>/visto/', VistoPostAPIView.as_view(), name='visto'),
     path('api/v1/post/<int:id>/alcance/', AlcancePostAPIView.as_view(), name='alcance'),
     path('api/v1/post/<int:id>/reports/', PostReportAPIToggle.as_view(), name='reports'),
+    path('api/v1/imc/<int:id>/private/', PrivateTestAPIToggle.as_view(), name='private-imc'),
 
 
     path('schema', SpectacularAPIView.as_view(), name='schema'),

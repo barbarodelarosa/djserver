@@ -58,6 +58,7 @@ INSTALLED_APPS = [
     'negocio',
     'usuario',
     'imc',
+    'pruebas',
 
     ###### OTHERS ######
     'corsheaders',

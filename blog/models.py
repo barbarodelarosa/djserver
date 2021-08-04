@@ -54,6 +54,7 @@ class Post(OwnerModel, ResizeImageMixin):
     likes = models.ManyToManyField(User, blank=True, related_name='likes')
     reports = models.ManyToManyField(User, blank=True, related_name='reports')
     alcance = models.ManyToManyField(User, blank=True, related_name='alcance')
+    private     = models.BooleanField(default=False)
 
     def alcance_total(self):
         return self.alcance.count()

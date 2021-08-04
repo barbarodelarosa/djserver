@@ -67,6 +67,8 @@ class Negocio(OwnerModel, ResizeImageMixin):
     localidad = models.CharField(blank=True, null=True, max_length=25)
     calle = models.CharField(blank=True, null=True, max_length=25)
     coordenadas = models.CharField(max_length=60, blank=True, null=True)
+    private     = models.BooleanField(default=False)
+
     # productos = models.ManyToManyField('Producto', blank=True, related_name='productos')
 
 
@@ -118,6 +120,7 @@ class Producto(OwnerModel, ResizeImageMixin):
     aprobado = models.BooleanField(default=False)
     precio = models.FloatField(default=0.00)
     compartido = models.IntegerField(default=0, blank=True)
+    private     = models.BooleanField(default=False)
 
     def aprovado(self):
         self.aprobado = True
