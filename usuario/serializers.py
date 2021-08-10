@@ -6,7 +6,8 @@ from usuario.models import User
 class UsuarioSerializers(serializers.ModelSerializer):
     email    = serializers.ReadOnlyField()
     username = serializers.ReadOnlyField()
-    avatar   = serializers.ImageField(required = False)
+    avatar   = serializers.ImageField(allow_null=True)
+    # avatar   = serializers.ImageField(required = False)
     class Meta:
         model=User
         fields=[
@@ -37,7 +38,6 @@ class OwnerSerializers(serializers.ModelSerializer):
     class Meta:
         model=User
         fields=["id","email","avatar","username","first_name","last_name","aprobado","movil"]
-
 
 
 

@@ -32,19 +32,22 @@ from rest_framework_simplejwt.views import  TokenObtainPairView,  TokenRefreshVi
 from api.views import MyPasswordTokenCheckAPI, CustomResgisterView
     # , MySetNewPasswordAPIViewfrom 
 
-from blog.apiviews import PostLikeAPIToggle, VistoPostAPIView, AlcancePostAPIView, PostReportAPIToggle
+from blog.apiviews import PostLikeAPIToggle, VistoPostAPIView, AlcancePostAPIView, PostReportAPIToggle, PostCommentViewSet
 from imc.views import PrivateTestAPIToggle
 
-
+comment_creation = PostCommentViewSet.as_view({
+    'post': 'set_comment'
+})
 
 urlpatterns = [
-
+    path('api/v2/', include('blog.urls')),
     path('api/password_reset/', include('django_rest_passwordreset.urls', namespace='password_reset')),
 
 
 
     path('admin/', admin.site.urls),
     path('api/v1/', include('api.urls')),
+    # path('api/v1/post/<int:pk>/comment/', comment_creation, name='comment_creation'),
     path('api/v1/post/<int:id>/like/', PostLikeAPIToggle.as_view(), name='like-toggle'),
     path('api/v1/post/<int:id>/visto/', VistoPostAPIView.as_view(), name='visto'),
     path('api/v1/post/<int:id>/alcance/', AlcancePostAPIView.as_view(), name='alcance'),

@@ -1,9 +1,13 @@
 from blog.models import *
-from blog.models import Post as MyPost
+from blog.models import Post as MyPost , Comentario
 from django.contrib import admin
 
-class MyPostAdmin(admin.ModelAdmin):
 
+class ComentarioInline(admin.TabularInline):
+    model = Comentario
+    extra = 1
+class MyPostAdmin(admin.ModelAdmin):
+    inlines = [ComentarioInline, ]
     model = MyPost
     list_display = ('aprobado', 'titulo', 'actualizado', 'votos', 'compartido')
     list_display_links = ('titulo',)

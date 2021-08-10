@@ -8,9 +8,10 @@ from datetime import timezone
 
 from drf_extra_fields.fields import Base64ImageField
 class ComentarioSerializers(serializers.ModelSerializer):
-    owner = serializers.HiddenField(
-        default=serializers.CurrentUserDefault()
-    )
+    # owner = serializers.HiddenField(
+    #     default=serializers.CurrentUserDefault()
+    # )
+    # owner = OwnerSerializers(allow_null=True, required=None, default=serializers.CurrentUserDefault())
     aprobado = serializers.HiddenField(default=False)
     class Meta:
         model=Comentario
@@ -34,6 +35,8 @@ class PostSerializers(serializers.ModelSerializer):
         default=serializers.CurrentUserDefault()
     )
     aprobado = serializers.HiddenField(default=False)
+    post_comentario = ComentarioSerializers(many=True, read_only=True, source='comentario_set')
+
     class Meta:
         model=Post
         fields='__all__'
@@ -52,14 +55,18 @@ class ImagenSerializers(serializers.ModelSerializer):
     # def create(self, validated_data):
     #     return Imagen.objects.create(**validated_data)
 
-
-
+class ComentarioPostNestedSerializer(WritableNestedModelSerializer):
+    owner = OwnerSerializers(allow_null=True)
+    aprobado = serializers.HiddenField(default=False)
+    class Meta:
+        model=Comentario
+        fields='__all__'
 
 class PostNestedSerializer(WritableNestedModelSerializer):
     owner = OwnerSerializers(allow_null=True)
     aprobado = serializers.HiddenField(default=False)
     categoria = CategoriaPostSerializers(many=True)
-    post_comentario = ComentarioSerializers(many=True)
+    post_comentario = ComentarioPostNestedSerializer(many=True)
     post_imagen = ImagenSerializers(many=True)
 
     class Meta:
@@ -70,7 +77,7 @@ class PostUserNestedSerializer(WritableNestedModelSerializer):
     owner = OwnerSerializers(allow_null=True)
     aprobado = serializers.HiddenField(default=False)
     categoria = CategoriaPostSerializers(many=True)
-    post_comentario = ComentarioSerializers(many=True)
+    post_comentario = ComentarioPostNestedSerializer(many=True)
 
     class Meta:
         model=Post
@@ -99,6 +106,7 @@ class Base64ImageField(serializers.ImageField):
 
         # Check if this is a base64 string
         if isinstance(data, six.string_types):
+            decoded_file = ''
             # Check if the base64 string is in the "data:" format
             if 'data:' in data and ';base64,' in data:
                 # Break out the header from the base64 content

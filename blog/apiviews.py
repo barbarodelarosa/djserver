@@ -1,5 +1,5 @@
 from django_filters.rest_framework import DjangoFilterBackend
-from rest_framework import generics, viewsets, filters, views, permissions
+from rest_framework import generics, viewsets, filters, views, permissions, status
 from rest_framework.pagination import PageNumberPagination
 from rest_framework.response import Response
 # from dj_rest_auth.jwt_auth import JWTAuthentication
@@ -9,9 +9,10 @@ from blog.models import Post,CategoriaPost, Comentario, Imagen
 
 from usuario.permission import IsOwnerOrReadOnly
 from blog.serializers import PostNestedSerializer, CategoriaPostNestedSerializer, ComentarioSerializers,\
-    CategoriaPostSerializers, PostSerializers, ImagenSerializers, LikePostSerializers
+    CategoriaPostSerializers, PostSerializers, ImagenSerializers, LikePostSerializers, ComentarioPostNestedSerializer
 
 from djserver.utils import ResizeImageMixin
+from rest_framework.decorators import action
 
 
 class ExtendedPagination(PageNumberPagination):
@@ -74,8 +75,8 @@ class CategoriaPostReadOnlyModelViewSet(viewsets.ReadOnlyModelViewSet):
     serializer_class = CategoriaPostNestedSerializer
 
 class ComentarioPostViewSet(viewsets.ModelViewSet):
-    authentication_classes = [JWTAuthentication]
-    permission_classes = [IsOwnerOrReadOnly]
+    # authentication_classes = [JWTAuthentication]
+    # permission_classes = [IsOwnerOrReadOnly]
     # permission_classes = [permissions.IsAuthenticatedOrReadOnly, IsOwnerOrReadOnly]
     queryset = Comentario.objects.filter(aprobado=True).order_by("-creado","-id")
     serializer_class = ComentarioSerializers
@@ -204,3 +205,26 @@ class PostReportAPIToggle(views.APIView):
         }
 
         return Response(data)
+
+
+# funcion solo para crear los comentarios solo por el momento hay que mejorarlo
+class PostCommentViewSet(viewsets.ModelViewSet):
+    # authentication_classes = [JWTAuthentication]
+    # permission_classes = [permissions.IsAuthenticated]
+    queryset = Post.objects.all()
+    serializer_class = PostSerializers
+
+    @action(methods=['post'], detail=True)
+    def set_comment(self, request, pk=None):
+
+
+        #get post object
+        my_post = self.get_object()  
+        serializer = ComentarioSerializers(data=request.data)                 
+        if serializer.is_valid():
+            serializer.save(post=my_post)
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    
