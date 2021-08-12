@@ -48,7 +48,7 @@ class PostReadOnlyModelViewSet(viewsets.ReadOnlyModelViewSet):
 
     filter_backends = [DjangoFilterBackend, filters.SearchFilter, filters.OrderingFilter]
 
-    search_fields = ['titulo','mensaje','creado','owner']
+    search_fields = ['titulo','mensaje','creado','owner__username','categoria__nombre']
     ordering_fields =['creado', 'titulo']
     filterset_fields = {
         'creado': ['lte', 'gte'],  # Año menor o igual, mayor o igual que
