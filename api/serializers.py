@@ -12,6 +12,45 @@ from dj_rest_auth.serializers import PasswordResetSerializer
 from allauth.account.adapter import get_adapter
 
 
+
+
+
+from django.contrib.auth.forms import PasswordResetForm
+from django.conf import settings
+from django.utils.translation import gettext as _
+# from rest_framework import serializers
+from usuario.models import User
+
+
+
+class MyPasswordResetSerializer(serializers.Serializer):
+    email = serializers.EmailField()
+    password_reset_form_class = PasswordResetForm
+    def validate_email(self, value):
+        self.reset_form = self.password_reset_form_class(data=self.initial_data)
+        if not self.reset_form.is_valid():
+            raise serializers.ValidationError(_('Error'))
+
+        ###### FILTER YOUR USER MODEL ######
+        if not User.objects.filter(email=value).exists():
+
+            raise serializers.ValidationError(_('Invalid e-mail address'))
+        return value
+
+    def save(self):
+        request = self.context.get('request')
+        opts = {
+            'use_https': request.is_secure(),
+            'from_email': getattr(settings, 'DEFAULT_FROM_EMAIL'),
+            'subject_template_name' : 'registration/password_reset_subject.html',
+            ###### USE YOUR TEXT FILE ######
+            'email_template_name': 'registration/password_reset_email.html',
+
+            'request': request,
+        }
+        self.reset_form.save(**opts)
+
+
 class MyPasswordResetConfirmSerializer(serializers.Serializer):
     password=serializers.CharField(min_length=6, max_length=68, write_only=True)
     token=serializers.CharField(min_length=1, max_length=68, write_only=True)
@@ -60,12 +99,13 @@ class CustomRegistrationSerializer(RegisterSerializer):
 
 
 class CustomPasswordResetSerializer(PasswordResetSerializer):
-  def get_email_options(self):
-      return {
-          'email_template_name': 'usuario/email/password_reset_email.html'
-      }
+    def get_email_options(self):
+        return {
+            'email_template_name': 'usuario/email/password_reset_email.html'
+        }
 
 #
+
 # class CustomRegisterSerializer(RegisterSerializer):
 #   def get_email_options(self):
 #       return {

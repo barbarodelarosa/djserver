@@ -41,12 +41,15 @@ comment_creation = PostCommentViewSet.as_view({
 
 urlpatterns = [
     path('api/v2/', include('blog.urls')),
-    path('api/password_reset/', include('django_rest_passwordreset.urls', namespace='password_reset')),
+    # path('api/password_reset/', include('django_rest_passwordreset.urls', namespace='password_reset')),
+    # path('api/dj-rest-auth/', include('dj_rest_auth.urls')),
+
 
 
 
     path('admin/', admin.site.urls),
     path('api/v1/', include('api.urls')),
+    path('api/v1/', include('pruebas.urls')),
     # path('api/v1/post/<int:pk>/comment/', comment_creation, name='comment_creation'),
     path('api/v1/post/<int:id>/like/', PostLikeAPIToggle.as_view(), name='like-toggle'),
     path('api/v1/post/<int:id>/visto/', VistoPostAPIView.as_view(), name='visto'),
@@ -62,7 +65,7 @@ urlpatterns = [
 
 
     path('api/auth/usuario-confirm-email/<str:key>/', ConfirmEmailView.as_view()),
-    # path('api/auth/register/', CustomResgisterView.as_view(), name="register"),
+    # # # # # path('api/auth/register/', CustomResgisterView.as_view(), name="register"),
     path('api/auth/register/', RegisterView.as_view()),
     path('api/auth/login/', LoginView.as_view()),
     path('api/auth/user/', UserDetailsView.as_view()),
@@ -74,8 +77,8 @@ urlpatterns = [
     path('api/auth/password-change/', PasswordChangeView.as_view()),
     path('api/auth/password-reset/', PasswordResetView.as_view()),
     path('api/auth/password-reset-confirm/<uidb64>/<token>/',MyPasswordTokenCheckAPI.as_view(), name='password_reset_confirm'),
-    # path('api/auth/password-reset-complete/',MySetNewPasswordAPIView.as_view(), name='password_reset_complete'),
-    # path('api/auth/password-reset-confirm/<uidb64>/<token>/',PasswordResetConfirmView.as_view(), name='password_reset_confirm'),
+    # # # # # # path('api/auth/password-reset-complete/',MySetNewPasswordAPIView.as_view(), name='password_reset_complete'),
+    # # # # # # path('api/auth/password-reset-confirm/<uidb64>/<token>/',PasswordResetConfirmView.as_view(), name='password_reset_confirm'),
     path('api/auth/token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
     path('api/auth/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
     path('api/auth/token/verify/', TokenVerifyView.as_view(), name='token_verify'),

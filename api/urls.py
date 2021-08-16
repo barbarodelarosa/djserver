@@ -1,5 +1,6 @@
 
 from usuario.apiviews import UsuarioViewSet
+from pruebas.apiviews import EmotionStateViewSet
 from imc.views import IMCViewSet
 from blog.apiviews import CategoriaPostViewSet, PostViewSet, ComentarioPostViewSet, CategoriaPostReadOnlyModelViewSet, \
                           PostReadOnlyModelViewSet, ImagenPostViewSet
@@ -33,6 +34,8 @@ router.register('galeria', GaleriaViewSet, basename='read-producto')
 
 router.register('usuario', UsuarioViewSet, basename='usuario')
 router.register('imc', IMCViewSet, basename='imc')
+router.register('emotion-state', EmotionStateViewSet, basename='emotion-state')
+
 
 urlpatterns=[
 

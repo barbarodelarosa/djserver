@@ -56,7 +56,8 @@ REST_AUTH_SERIALIZERS = {
     'USER_DETAILS_SERIALIZER':'usuario.serializers.UsuarioSerializers',
 # 'REGISTER_SERIALIZER'
     'REGISTER_SERIALIZER': 'api.serializers.MyCustomRegisterSerializer',
-    'PASSWORD_RESET_SERIALIZER': 'api.serializers.CustomPasswordResetSerializer'
+    'PASSWORD_RESET_SERIALIZER': 'api.serializers.MyPasswordResetSerializer'
+    # 'PASSWORD_RESET_SERIALIZER': 'api.serializers.CustomPasswordResetSerializer'
 }
 #
 # REST_AUTH_REGISTER_SERIALIZERS = {
@@ -84,6 +85,6 @@ SIMPLE_JWT = {
     'REFRESH_TOKEN_LIFETIME': datetime.timedelta(days=45)
 }
 
-EMAIL_BACKEND='django.core.mail.backends.smtp.EmailBackend'
+# EMAIL_BACKEND='django.core.mail.backends.smtp.EmailBackend'
 
 

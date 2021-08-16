@@ -56,6 +56,7 @@ class Post(OwnerModel, ResizeImageMixin):
     alcance = models.ManyToManyField(User, blank=True, related_name='alcance')
     private     = models.BooleanField(default=False)
 
+    precio = models.FloatField(blank=True, null=True)
     def alcance_total(self):
         return self.alcance.count()
 
