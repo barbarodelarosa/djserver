@@ -124,18 +124,21 @@ WSGI_APPLICATION = 'djserver.wsgi.application'
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
 
 DATABASES = {
-    # 'default': {
-    #             'ENGINE': 'django.db.backends.mysql',
-    #             'NAME': os.getenv('DATABASE_NAME'),
-    #             'USER': os.getenv('DATABASE_USER'),
-    #             'PASSWORD': os.getenv('DATABASE_PASS'),
-    #             'HOST': os.getenv('DATABASE_HOST_ADDRESS'),
-    #             # 'PORT': '3306',
-    #         }
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db1.sqlite3',
-    }
+     'default': {
+                 'ENGINE': 'django.db.backends.mysql',
+		  'OPTIONS': {
+			'read_default_file': '/etc/mysql/mysql-djserver.cnf',
+		},
+#                 'NAME': os.getenv('DATABASE_NAME'),
+#                'USER': os.getenv('DATABASE_USER'),
+#                 'PASSWORD': os.getenv('DATABASE_PASS'),
+#                 'HOST': os.getenv('DATABASE_HOST_ADDRESS'),
+#                 'PORT': '3306',
+             }
+#    'default': {
+#        'ENGINE': 'django.db.backends.sqlite3',
+#        'NAME': BASE_DIR / 'db1.sqlite3',
+ #   }
 }
 
 # Password validation
@@ -173,10 +176,11 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.2/howto/static-files/
 
 STATIC_URL = '/static/'
+STATIC_ROOT= os.path.join(BASE_DIR, 'static')
+#STATICFILES_DIRS = (
+#    os.path.join(os.path.dirname(os.path.dirname(__file__)), 'static', 'static'),
+#)
 
-STATICFILES_DIRS = (
-    os.path.join(os.path.dirname(os.path.dirname(__file__)), 'static', 'static'),
-)
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_URL = '/media/'
