@@ -33,7 +33,7 @@ SECRET_KEY = 'django-insecure-o8z-gyyxbg7p&%3!499-03qb6(_!kl&ovkipbd1qtxi+gno1zj
 #SECRET_KEY = os.getenv('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 ALLOWED_HOSTS = ['*']
 # AGREGADAS
 AUTH_USER_MODEL = 'usuario.User'
